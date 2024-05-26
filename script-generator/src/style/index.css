@@ -16,3 +16,13 @@
         @apply text-xl;
     }
 }
+
+@layer components {
+    .input {
+        @apply bg-slate-50 border border-gray-400 rounded focus:border-blue-400 focus:border-2 pl-2 pr-2 outline-none m-[1px] focus:m-0;
+    }
+
+    .linklike {
+        @apply text-blue-500 hover:underline;
+    }
+}
