@@ -1,7 +1,7 @@
 import { CopyText } from "./components/CopyText";
 import { ScriptConfig, ScriptConfigValues } from "./components/ScriptConfig";
 import { generateScript } from "./generateScript";
-import { useLocalStorage } from "./LocalStorageHook";
+import { useLocalStorage } from "./localStorageHook";
 
 const defaultConfigValues: ScriptConfigValues = {
     projectName: "my-app",

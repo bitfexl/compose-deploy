@@ -1,0 +1,8 @@
+{
+    "cronStartDocker": "@reboot USER_HERE cd PROJECT_PATH_HERE && systemctl start docker && docker compose up -d",
+    "cronStartPodman": "@reboot USER_HERE cd PROJECT_PATH_HERE && podman compose up -d",
+    "cronUpdate": "CRON_HERE USER_HERE echo \">>> Executing update script at $(date -Iseconds) <<<\" >> LOG_FILE_HERE && UPDATE_SCRIPT_HERE >> LOG_FILE_HERE",
+    "execBase64": "echo BASE64_HERE | base64 -d - | sh",
+    "base64ToFile": "echo BASE64_HERE | base64 -d - > FILE_HERE",
+    "aptInstall": "apt update -y && apt install PACKAGES_HERE -y"
+}
