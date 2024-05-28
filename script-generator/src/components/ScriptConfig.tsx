@@ -109,7 +109,7 @@ export function ScriptConfig({ values, setValues }: ScriptConfigProps) {
                             checked={values.installEngine}
                             onChange={() => setValues({ ...values, installEngine: !values.installEngine })}
                         />
-                        Add install <i>(docker-compose-v2{values.engine == "podman" && ", podman"})</i>
+                        Add install <i>(git, docker-compose-v2{values.engine == "podman" && ", podman"})</i>
                     </div>
                 </label>
             </div>
