@@ -37,14 +37,14 @@ export default function App() {
             <div className="inline-flex flex-col gap-4 m-4 ml-[20%] mb-32" style={{ maxWidth: "min(75vw, 800px)" }}>
                 <h1>Compose Deploy Script Generator</h1>
                 <div className="flex flex-col gap-2">
-                    <p>
+                    <p className="text-justify">
                         This tool generates a script for installing a Compose application along with an automatic update mechanism. It pulls
                         the latest commits from a specified Git repository and branch. The branch must contain a{" "}
                         <pre className="inline">compose.yml</pre> file at the root level, which will be used to build and run the
                         application. Note that SSH keys must be configured in advance.
                     </p>
                     <p>The script will generate the following files and directories (green values are configurable):</p>
-                    <table className="border-separate border-spacing-4 border-spacing-x-12 text-justify">
+                    <table className="border-separate border-spacing-4 border-spacing-x-12 text-justify -ml-12 -mr-12">
                         <tr>
                             <td>
                                 <pre>
