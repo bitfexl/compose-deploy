@@ -3,8 +3,8 @@
 giturl=GIT_URL_HERE
 gitbranch=GIT_BRANCH_HERE
 
-mkdir -p APP_NAME_HERE
-cd APP_NAME_HERE
+mkdir -p PROJECT_PATH_HERE
+cd PROJECT_PATH_HERE
 
 oldhash=nohash
 
@@ -33,7 +33,7 @@ then
   podman compose down
   podman compose up -d
   #END
-  
+
   echo "Updated from $oldhash to $newhash"
 else
   echo "No update, staying on $oldhash"

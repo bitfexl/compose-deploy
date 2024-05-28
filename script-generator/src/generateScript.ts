@@ -6,17 +6,18 @@ import baseScript from "./scriptdata/base.sh?raw";
 export function generateScript(config: ScriptConfigValues): string {
     const installDir = !config.installDir.endsWith("/") ? config.installDir + "/" : config.installDir;
     const updateScript = installDir + "update-" + config.projectName + ".sh";
+    const projectPath = installDir + config.projectName;
 
     const files = [
-        [updateScript, generateUpdateScript(config)],
-        ["/etc/cron.d/" + config.projectName, generateCronFile(config, updateScript)],
+        [updateScript, generateUpdateScript(config, projectPath)],
+        ["/etc/cron.d/" + config.projectName, generateCronFile(config, updateScript, projectPath)],
     ];
 
-    const commands = [];
+    const commands = ["mkdir -p " + config.installDir];
 
     if (config.installEngine) {
         commands.push("echo Installing packages...");
-        commands.push(snippets.aptInstall.replace("PACKAGES_HERE", "docker-compose-v2" + config.engine == "podman" ? " podman" : ""));
+        commands.push(snippets.aptInstall.replace("PACKAGES_HERE", "git docker-compose-v2" + (config.engine == "podman" ? " podman" : "")));
     }
 
     for (const file of files) {
@@ -32,11 +33,11 @@ export function generateScript(config: ScriptConfigValues): string {
     return snippets.execBase64.replace("BASE64_HERE", btoa(commands.join("\n")));
 }
 
-function generateUpdateScript(config: ScriptConfigValues): string {
+function generateUpdateScript(config: ScriptConfigValues, projectPath: string): string {
     let updateScript = baseScript;
     updateScript = updateScript.replaceAll("GIT_URL_HERE", config.gitURL);
     updateScript = updateScript.replaceAll("GIT_BRANCH_HERE", config.gitBranch);
-    updateScript = updateScript.replaceAll("APP_NAME_HERE", config.projectName);
+    updateScript = updateScript.replaceAll("PROJECT_PATH_HERE", projectPath);
 
     if (config.engine == "docker") {
         updateScript = updateScript.replace(/#PODMANONLY((.|\n)*?)#END/gm, "");
@@ -52,7 +53,7 @@ function generateUpdateScript(config: ScriptConfigValues): string {
     return updateScript;
 }
 
-function generateCronFile(config: ScriptConfigValues, updateScript: string): string {
+function generateCronFile(config: ScriptConfigValues, updateScript: string, projectPath: string): string {
     let cronFile = "";
 
     // restart on reboot
@@ -74,10 +75,8 @@ function generateCronFile(config: ScriptConfigValues, updateScript: string): str
         cronFile += snippets.cronUpdate.replace("CRON_HERE", cron) + "\n";
     }
 
-    const installDir = !config.installDir.endsWith("/") ? config.installDir + "/" : config.installDir;
-
     cronFile = cronFile.replaceAll("USER_HERE", config.updateUser);
-    cronFile = cronFile.replaceAll("PROJECT_PATH_HERE", installDir + config.projectName);
+    cronFile = cronFile.replaceAll("PROJECT_PATH_HERE", projectPath);
     cronFile = cronFile.replaceAll("LOG_FILE_HERE", "/var/log/update-" + config.projectName + ".log");
     cronFile = cronFile.replaceAll("UPDATE_SCRIPT_HERE", updateScript);
 
