@@ -74,8 +74,7 @@ export function ScriptConfig({ values, setValues }: ScriptConfigProps) {
                             value={values.installDir}
                             onChange={(e) => setValues({ ...values, installDir: e.target.value })}
                         />
-                        <br />
-                        <i className="text-orange-300">TODO: USE CURRENT WORKING DIRECTORY</i>
+                        {/* <i className="text-orange-300">TODO: USE CURRENT WORKING DIRECTORY</i> */}
                     </div>
                 </label>
 
